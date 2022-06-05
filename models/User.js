@@ -18,10 +18,10 @@ const UserSchema = new Schema(
       trim: true,
       match: [/.+\@.+\..+/, "Please enter a valid email address!"],
     },
-    post: [
+    thought: [
       {
         type: Schema.Types.ObjectId,
-        ref: "post",
+        ref: "thought",
       },
     ],
     friend: [

@@ -13,13 +13,13 @@ const {
 } = require("../../controllers/user-controller");
 
 /* This is a method chaining. */
-router.route("/").get(getAllUser).post(createUser);
+router.route("/").get(getAllUser).thought(createUser);
 
 /* This is a method chaining. */
 router.route("/:id").get(getUserById).put(updateUser).delete(deleteUser);
 
 /* This is a method chaining. */
-router.route("/:userId/friend/:friendId").post(addFriend).delete(deleteFriend);
+router.route("/:userId/friend/:friendId").thought(addFriend).delete(deleteFriend);
 
 /* Exporting the router object. */
 module.exports = router;

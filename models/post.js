@@ -2,7 +2,7 @@
 const { Schema, model, Types } = require("mongoose");
 const dateFormat = require("../utils/dateFormat");
 
-/* This is creating a schema for the post model. */
+/* This is creating a schema for the thought model. */
 const ReactionSchema = new Schema(
   {
     reactionId: {
@@ -35,10 +35,10 @@ const ReactionSchema = new Schema(
   }
 );
 
-/* This is creating a schema for the post model. */
-const postSchema = new Schema(
+/* This is creating a schema for the thought model. */
+const thoughtSchema = new Schema(
   {
-    postText: {
+    thoughtText: {
       type: String,
       required: true,
       trim: true,
@@ -67,12 +67,12 @@ const postSchema = new Schema(
 
 /* This is creating a virtual property called reactionCount. This is a getter function that returns the
 length of the reaction array. */
-postSchema.virtual("reactionCount").get(function () {
+thoughtSchema.virtual("reactionCount").get(function () {
   return this.reaction.length;
 });
 
-/* This is creating a model called post and exporting it. */
-const post = model("post", postSchema);
+/* This is creating a model called thought and exporting it. */
+const thought = model("thought", thoughtSchema);
 
-/* This is exporting the post model. */
-module.exports = post;
+/* This is exporting the thought model. */
+module.exports = thought;

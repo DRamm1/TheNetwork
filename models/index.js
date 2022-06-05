@@ -1,6 +1,6 @@
-/* Importing the User and post models from the models folder. */
+/* Importing the User and thought models from the models folder. */
 const User = require("./User");
-const post = require("./post");
+const thought = require("./thought");
 
-/* Exporting the User and post models. */
-module.exports = { User, post };
+/* Exporting the User and thought models. */
+module.exports = { User, thought };

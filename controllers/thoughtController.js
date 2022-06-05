@@ -1,112 +1,112 @@
-/* This is destructuring the post and user models from the models folder. */
-const { post, User } = require("../models");
+/* This is destructuring the thought and user models from the models folder. */
+const { thought, User } = require("../models");
 
-/* This is the controller for the post model. It contains all the methods that will be used to
-manipulate the post model. */
-const postController = {
-  getAllpost(req, res) {
-    post
+/* This is the controller for the thought model. It contains all the methods that will be used to
+manipulate the thought model. */
+const thoughtController = {
+  getAllthought(req, res) {
+    thought
       .find({})
       .select("-__v")
-      .then((dbpostData) => res.json(dbpostData))
+      .then((dbthoughtData) => res.json(dbthoughtData))
       .catch((err) => {
         console.log(err);
         res.status(400).json(err);
       });
   },
-  getpostById({ params }, res) {
-    post
+  getthoughtById({ params }, res) {
+    thought
       .findOne({ _id: params.id })
       .populate({
         path: "reaction",
         select: "-__v",
       })
       .select("-__v")
-      .then((dbpostData) => {
-        if (!dbpostData) {
+      .then((dbthoughtData) => {
+        if (!dbthoughtData) {
           res.status(404).json({ message: "Nothing found with this ID" });
           return;
         }
-        res.json(dbpostData);
+        res.json(dbthoughtData);
       })
       .catch((err) => {
         console.log(err);
         res.status(400).json(err);
       });
   },
-  createpost({ params, body }, res) {
-    post
+  createthought({ params, body }, res) {
+    thought
       .create(body)
       .then(({ _id }) => {
         return User.findOneAndUpdate(
           { _id: params.id },
-          { $push: { posts: _id } },
+          { $push: { thoughts: _id } },
           { new: true, runValidators: true }
         );
       })
-      .then((dbpostData) => {
-        if (!dbpostdata) {
+      .then((dbthoughtData) => {
+        if (!dbthoughtdata) {
           res.status(404).json({ message: "Nothing found with this ID" });
           return;
         }
-        res.json(dbpostData);
+        res.json(dbthoughtData);
       })
       .catch((err) => res.status(400).json(err));
   },
-  updatepost({ params, body }, res) {
-    post
+  updatethought({ params, body }, res) {
+    thought
       .findOneAndUpdate({ _id: params.id }, body, {
         new: true,
         runValidators: true,
       })
-      .then((dbpostData) => {
-        if (!dbpostData) {
+      .then((dbthoughtData) => {
+        if (!dbthoughtData) {
           res.status(404).json({ message: "Nothing found with this ID" });
           return;
         }
-        res.json(dbpostData);
+        res.json(dbthoughtData);
       })
       .catch((err) => res.status(400).json(err));
   },
-  deletepost({ params }, res) {
-    post
+  deletethought({ params }, res) {
+    thought
       .findOneAndDelete({ _id: params.id })
-      .then((dbpostData) => {
-        if (!dbpostData) {
+      .then((dbthoughtData) => {
+        if (!dbthoughtData) {
           res.status(404).json({ message: "Nothing found with this ID" });
           return;
         }
-        res.json(dbpostData);
+        res.json(dbthoughtData);
       })
       .catch((err) => res.status(400).json(err));
   },
   addReaction({ params, body }, res) {
-    post
+    thought
       .findOneAndUpdate(
-        { _id: params.postId },
+        { _id: params.thoughtId },
         { $push: { reaction: body } },
         { new: true, runValidators: true }
       )
-      .then((dbpostData) => {
-        if (!dbpostData) {
+      .then((dbthoughtData) => {
+        if (!dbthoughtData) {
           res.status(404).json({ message: "Nothing found with this ID" });
           return;
         }
-        res.json(dbpostData);
+        res.json(dbthoughtData);
       })
       .catch((err) => res.json(err));
   },
   deleteReaction({ params }, res) {
-    post
+    thought
       .findOneAndUpdate(
-        { _id: params.postId },
+        { _id: params.thoughtId },
         { $pull: { reaction: { reactionId: params.reactionId } } },
         { new: true }
       )
-      .then((dbpostData) => res.json(dbpostData))
+      .then((dbthoughtData) => res.json(dbthoughtData))
       .catch((err) => res.json(err));
   },
 };
 
-/* This is exporting the postController object so that it can be used in other files. */
-module.exports = postController;
+/* This is exporting the thoughtController object so that it can be used in other files. */
+module.exports = thoughtController;
